@@ -45,6 +45,9 @@ environment = SubResource( 2 )
 
 [node name="StaticBody" type="StaticBody" parent="."]
 transform = Transform( 3.02186, 2.09633, 1.57282, -2.62076, 2.41717, 1.81354, 0, -2.40056, 3.19958, -0.991391, 16.0642, 93.6875 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Ship" type="MeshInstance" parent="StaticBody"]
 transform = Transform( 1, 1.19167e-08, 5.3641e-08, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
@@ -54,4 +57,52 @@ material/0 = SubResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
 transform = Transform( 1, 1.19167e-08, -5.96362e-09, 0, 1, 2.98023e-08, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="StaticBody2" type="StaticBody" parent="."]
+transform = Transform( -0.361728, -2.63424, 2.9883, -3.79739, 1.13472, 0.540611, -1.20374, -2.78805, -2.60342, 188.636, 16.0642, 374.027 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Ship" type="MeshInstance" parent="StaticBody2"]
+transform = Transform( 1, -4.16094e-11, 2.97709e-08, 2.98023e-08, 1, 2.98023e-08, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 3 )
+skeleton = NodePath("")
+material/0 = SubResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody2"]
+transform = Transform( 1, -4.16094e-11, -3.14344e-11, 2.98023e-08, 1, 2.98023e-08, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="StaticBody3" type="StaticBody" parent="."]
+transform = Transform( -0.361728, -2.63424, 2.9883, -3.79739, 1.13472, 0.540611, -1.20374, -2.78805, -2.60342, 266.747, -26.5827, -461.697 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Ship" type="MeshInstance" parent="StaticBody3"]
+transform = Transform( 1, -4.16094e-11, 2.97709e-08, 2.98023e-08, 1, 2.98023e-08, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 3 )
+skeleton = NodePath("")
+material/0 = SubResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody3"]
+transform = Transform( 1, -4.16094e-11, -3.14344e-11, 2.98023e-08, 1, 2.98023e-08, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="StaticBody4" type="StaticBody" parent="."]
+transform = Transform( -2.96542, -1.03324, 2.47764, -2.39943, 2.67567, -1.75599, -1.20374, -2.78805, -2.60342, -149.653, -26.5827, -461.697 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Ship" type="MeshInstance" parent="StaticBody4"]
+transform = Transform( 1, -4.16094e-11, 2.97709e-08, 2.98023e-08, 1, 2.98023e-08, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 3 )
+skeleton = NodePath("")
+material/0 = SubResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody4"]
+transform = Transform( 1, -4.16094e-11, -3.14344e-11, 2.98023e-08, 1, 2.98023e-08, 0, 0, 1, 0, 0, 0 )
 shape = SubResource( 5 )

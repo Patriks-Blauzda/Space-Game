@@ -1,38 +1,53 @@
 extends KinematicBody
 
-var spd = 500
+export var spd = 150
+export var boost = 300
+export var accel = 5
+
+var currentspd = 0
 var vel = Vector3.ZERO
 export var sens = 0.1
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
-func _physics_process(delta):
-	var velocity = Input.get_vector("joystick_left", "joystick_right", "joystick_up", "joystick_down")
-	rotation_degrees.y -= velocity.x
-	rotation_degrees.x += velocity.y
+func motion():
+	var direction = Input.get_vector("joystick_left", "joystick_right", "joystick_up", "joystick_down")
+	
+	rotate_object_local(Vector3(direction.y, 0, direction.x), 0.05)
 	
 	if Input.is_action_pressed("throttle"):
-		vel += transform.basis.z
-		if vel.distance_to(translation) > spd * 4:
-			vel -= transform.basis.z
+		if currentspd < boost:
+			currentspd += accel
+	else:
+		if currentspd < spd:
+			currentspd += accel
+		elif currentspd > spd:
+			currentspd -= accel
 	
 	if Input.is_action_pressed("brake"):
-		vel *= 0.95
+		currentspd -= accel * 2
+	
+	currentspd = clamp(currentspd, spd/2, boost)
+	
+	vel = transform.basis.z * currentspd
+	
+	transform = transform.orthonormalized()
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+#	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	pass
+
+
+func _physics_process(delta):
+	$Label.text = str(currentspd)
+	
+	motion()
 	
 	var collisions = move_and_collide(vel * delta)
-	
-	if collisions:
-		vel *= 0.65
+
 
 
 func _input(event):
-	if event is InputEventMouseMotion:
-		
-		rotation_degrees += Vector3(event.relative.y * sens, -event.relative.x * sens, 0)
-	
 	if event is InputEventKey:
 		if event.scancode == KEY_ESCAPE && !event.echo && event.pressed:
 			if Input.get_mouse_mode() == 2:
