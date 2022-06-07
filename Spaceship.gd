@@ -13,6 +13,7 @@ var currentspd = 0
 # to be used for the 3d matrix and multiplied by current speed
 var vel = Vector3.ZERO
 
+var rng = RandomNumberGenerator.new()
 
 # handles player movement and rotation
 func motion():
@@ -62,14 +63,22 @@ func motion():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 #	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	pass
+	rng.randomize()
 
 
 func _physics_process(delta):
 	# used to display speed on the screen
-	$Label.text = str(currentspd)
+	$Label.text = str(currentspd) + "\n"
 	
 	motion()
+	
+	# camera shakes when going above normal speed
+	if currentspd > spd:
+		$Camera.h_offset = rng.randf_range(-currentspd*0.0001, currentspd*0.0001)
+		$Camera.v_offset = rng.randf_range(-currentspd*0.0001, currentspd*0.0001)
+	else:
+		$Camera.h_offset = 0
+		$Camera.v_offset = 0
 	
 	# calculates collision and movement
 	var collisions = move_and_collide(vel * delta)
