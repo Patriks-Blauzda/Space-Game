@@ -4,7 +4,11 @@ extends KinematicBody
 export var spd = 150
 export var boost = 300
 export var accel = 5
+export var rotationspd = 0.05
 
+
+var currentrotation = rotationspd
+var saveddirections = Vector2.ZERO
 var currentspd = 0
 # to be used for the 3d matrix and multiplied by current speed
 var vel = Vector3.ZERO
@@ -15,8 +19,19 @@ func motion():
 	# takes joystick or arrow key input and turns it into a 2d vector
 	var direction = Input.get_vector("joystick_left", "joystick_right", "joystick_up", "joystick_down")
 	
+	# if player is turning, increment current rotation speed by a fraction of max rotation speed
+	# if player isn't turning, decrement it by the same amount
+	# used for smoothing the player's turning
+	if direction.x != 0 || direction.y != 0:
+		currentrotation = clamp(currentrotation + rotationspd * 0.1, 0, rotationspd)
+		# saves directional inputs for a smooth stop when letting go of movement buttons
+		saveddirections = direction
+	else:
+		currentrotation = clamp(currentrotation - rotationspd * 0.1, 0, rotationspd)
+	
+	
 	# function rotates the player by specified angle (0.05 radians)
-	rotate_object_local(Vector3(direction.y, 0, direction.x), 0.05)
+	rotate_object_local(Vector3(saveddirections.y, 0, saveddirections.x).normalized(), currentrotation)
 	
 	
 	# if button is held, max speed is increased
