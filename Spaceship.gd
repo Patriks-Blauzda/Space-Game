@@ -13,6 +13,13 @@ var currentspd = 0
 # to be used for the 3d matrix and multiplied by current speed
 var vel = Vector3.ZERO
 
+# values to be assigned to laser.gd on instance creation
+export var laserspd = 30
+export var laserdmg = 15
+
+#loads the scene containing the laser projectile
+onready var laser = preload("res://Laser.tscn")
+
 var rng = RandomNumberGenerator.new()
 
 # handles player movement and rotation
@@ -26,12 +33,13 @@ func motion():
 	if direction.x != 0 || direction.y != 0:
 		currentrotation = clamp(currentrotation + rotationspd * 0.1, 0, rotationspd)
 		# saves directional inputs for a smooth stop when letting go of movement buttons
-		saveddirections = direction
+		saveddirections = direction.normalized()
 	else:
 		currentrotation = clamp(currentrotation - rotationspd * 0.1, 0, rotationspd)
 	
 	
 	# function rotates the player by specified angle (0.05 radians)
+	rotate_object_local(Vector3(saveddirections.y, 0, saveddirections.x).normalized(), currentrotation)
 	rotate_object_local(Vector3(saveddirections.y, 0, saveddirections.x).normalized(), currentrotation)
 	
 	
@@ -60,6 +68,28 @@ func motion():
 	transform = transform.orthonormalized()
 
 
+# spawns an instance of a laser projectile
+func shoot_laser():
+	if Input.is_action_pressed("Laser") && $Weapons/LaserCooldown.is_stopped():
+		# saves the instanced laser beam in a variable
+		var laserinst = laser.instance()
+		
+		# values are assigned before the laser beam is created
+		laserinst.player = self
+		
+		laserinst.spd = laserspd
+		laserinst.dmg = laserdmg
+		
+		# sets the projectile's position to be in front of the player
+		laserinst.transform = self.transform
+		laserinst.translate_object_local($Weapons/LaserPosition.translation)
+		
+		# spawns the projectile in the parent node and starts a timer
+		# another laser cannot be fired until the timer stops
+		get_parent().add_child(laserinst)
+		$Weapons/LaserCooldown.start()
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 #	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -71,6 +101,8 @@ func _physics_process(delta):
 	$Label.text = str(currentspd) + "\n"
 	
 	motion()
+	
+	shoot_laser()
 	
 	# camera shakes when going above normal speed
 	if currentspd > spd:
