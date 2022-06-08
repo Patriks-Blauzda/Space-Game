@@ -113,7 +113,11 @@ func _physics_process(delta):
 		$Camera.v_offset = 0
 	
 	# calculates collision and movement
-	var collisions = move_and_collide(vel * delta)
+	var collision = move_and_collide(vel * delta)
+	
+	# stops the player when colliding with an object
+	if collision:
+		currentspd = 0
 
 
 # checks if ESC or R are pressed, esc toggles mouse mode and R reloads the game
