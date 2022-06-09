@@ -44,14 +44,23 @@ func motion():
 	
 	
 	# if button is held, max speed is increased
-	if Input.is_action_pressed("throttle"):
+	if Input.is_action_pressed("throttle") && $Boost/BoostMeter.value > 0:
 		if currentspd < boost:
 			currentspd += accel
+			
+		# If BoostMeter's value is 0, the player can't use the boost
+		# BoostMeter recharges after 2 seconds of it not being used
+		$Boost/BoostMeter.value -= 1
+		$Boost/BoostCooldown.start()
 	else:
 		if currentspd < spd:
 			currentspd += accel
 		elif currentspd > spd:
 			currentspd -= accel
+	
+	# Recharges the player's boost when the cooldown is over
+	if $Boost/BoostCooldown.is_stopped():
+		$Boost/BoostMeter.value += 1
 	
 	# slows the player
 	if Input.is_action_pressed("brake"):

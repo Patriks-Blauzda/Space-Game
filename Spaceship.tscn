@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Models/normal.png" type="Texture" id=1]
 [ext_resource path="res://Spaceship.gd" type="Script" id=2]
@@ -24,6 +24,12 @@ albedo_texture = ExtResource( 1 )
 
 [sub_resource type="ConvexPolygonShape" id=3]
 points = PoolVector3Array( 5.79726, -0.360878, -5.54876, 5.79726, -0.495022, -5.54876, 5.79726, -0.360878, -6.11237, 0.553958, 0.905471, 0.0131631, 4.98108, -0.210148, -2.21256, 4.93, -0.352676, 0.201034, 5.79726, -0.495022, -6.11237, 4.93, -0.503224, 0.201034, 4.98108, -0.64557, -2.21256, -5.7984, -0.360878, -6.11237, 0.553958, 0.905471, -0.430785, -0.555093, 0.905471, 0.0131631, 0.481308, 0.888703, 0.0861573, 0.110111, -0.865376, 6.11117, -5.7984, -0.495022, -6.11237, 0.78099, -0.848244, -1.69203, 0.110111, -0.89144, 6.11117, -0.00113487, -0.956325, 2.53804, -5.7984, -0.360878, -5.54876, -0.555093, 0.905471, -0.430785, -0.482442, 0.888703, 0.0861573, -4.98222, -0.210148, -2.21256, -4.93113, -0.352676, 0.201034, -0.111246, -0.865376, 6.11117, -4.98222, -0.64557, -2.21256, -5.7984, -0.495022, -5.54876, -0.782125, -0.848244, -1.69203, -0.111246, -0.89144, 6.11117, -4.93113, -0.503224, 0.201034 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.588235, 0.541176, 0.541176, 1 )
+
+[sub_resource type="Theme" id=5]
+ProgressBar/styles/bg = SubResource( 4 )
 
 [node name="Spaceship" type="KinematicBody"]
 collision_mask = 6
@@ -61,6 +67,11 @@ autowrap = true
 
 [node name="Weapons" type="Node" parent="."]
 
+[node name="Crosshair" type="Sprite" parent="Weapons"]
+modulate = Color( 1, 1, 1, 0.470588 )
+position = Vector2( 512, 303 )
+texture = ExtResource( 3 )
+
 [node name="LaserPosition" type="Position3D" parent="Weapons"]
 transform = Transform( 1, 0, 0, 0, 1.00025, 0, 0, 0, 1.00025, 0, -1.5, 14 )
 
@@ -68,7 +79,20 @@ transform = Transform( 1, 0, 0, 0, 1.00025, 0, 0, 0, 1.00025, 0, -1.5, 14 )
 wait_time = 0.2
 one_shot = true
 
-[node name="Crosshair" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0.470588 )
-position = Vector2( 512, 303 )
-texture = ExtResource( 3 )
+[node name="Boost" type="Node" parent="."]
+
+[node name="BoostMeter" type="ProgressBar" parent="Boost"]
+margin_left = 421.0
+margin_top = 522.0
+margin_right = 607.0
+margin_bottom = 564.0
+mouse_filter = 2
+theme = SubResource( 5 )
+max_value = 120.0
+step = 1.0
+value = 40.0
+percent_visible = false
+
+[node name="BoostCooldown" type="Timer" parent="Boost"]
+wait_time = 2.0
+one_shot = true
