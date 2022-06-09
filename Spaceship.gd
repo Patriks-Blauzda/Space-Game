@@ -4,7 +4,7 @@ extends KinematicBody
 export var spd = 150
 export var boost = 300
 export var accel = 5
-export var rotationspd = 0.05
+export var rotationspd = 0.0275
 
 
 var currentrotation = rotationspd
@@ -25,7 +25,7 @@ var rng = RandomNumberGenerator.new()
 # handles player movement and rotation
 func motion():
 	# takes joystick or arrow key input and turns it into a 2d vector
-	var direction = Input.get_vector("joystick_left", "joystick_right", "joystick_up", "joystick_down")
+	var direction = Input.get_vector("joystick_left", "joystick_right", "joystick_down", "joystick_up")
 	
 	# if player is turning, increment current rotation speed by a fraction of max rotation speed
 	# if player isn't turning, decrement it by the same amount
