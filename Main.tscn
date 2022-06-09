@@ -42,7 +42,6 @@ points = PoolVector3Array( 5.79726, -0.360878, -5.54876, 5.79726, -0.495022, -5.
 environment = SubResource( 2 )
 
 [node name="Spaceship" parent="." instance=ExtResource( 2 )]
-rotationspd = 0.025
 
 [node name="StaticBody" type="StaticBody" parent="."]
 transform = Transform( 3.02186, 2.09633, 1.57282, -2.62076, 2.41717, 1.81354, 0, -2.40056, 3.19958, -0.991391, 16.0642, 93.6875 )

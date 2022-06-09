@@ -4,7 +4,7 @@ extends KinematicBody
 export var spd = 150
 export var boost = 300
 export var accel = 5
-export var rotationspd = 0.0275
+export var rotationspd = 5
 
 
 var currentrotation = rotationspd
@@ -37,10 +37,9 @@ func motion():
 	else:
 		currentrotation = clamp(currentrotation - rotationspd * 0.1, 0, rotationspd)
 	
-	
 	# function rotates the player by specified angle (0.05 radians)
-	rotate_object_local(Vector3(saveddirections.y, 0, saveddirections.x).normalized(), currentrotation)
-	rotate_object_local(Vector3(saveddirections.y, 0, saveddirections.x).normalized(), currentrotation)
+	rotate_object_local(Vector3(saveddirections.y, 0, saveddirections.x).normalized(),
+								clamp(currentrotation / (currentspd + 1), 0, 0.05))
 	
 	
 	# if button is held, max speed is increased
