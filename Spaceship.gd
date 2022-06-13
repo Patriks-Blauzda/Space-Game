@@ -125,8 +125,8 @@ func _physics_process(delta):
 	
 	# stops the player when colliding with an object
 	if collision:
-#		currentspd = 0
-		pass
+		if collision.collider is StaticBody:
+			currentspd = 0
 
 
 # checks if ESC or R are pressed, esc toggles mouse mode and R reloads the game
