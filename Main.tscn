@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://panorama_image.png" type="Texture" id=1]
 [ext_resource path="res://Spaceship.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Meteor.tscn" type="PackedScene" id=3]
 
 [sub_resource type="PanoramaSky" id=1]
 radiance_size = 4
@@ -36,15 +37,17 @@ roughness = 0.25
 [sub_resource type="ConvexPolygonShape" id=5]
 points = PoolVector3Array( 5.79726, -0.360878, -5.54876, 5.79726, -0.495022, -5.54876, 5.79726, -0.360878, -6.11237, 0.553958, 0.905471, 0.0131631, 4.98108, -0.210148, -2.21256, 4.93, -0.352676, 0.201034, 5.79726, -0.495022, -6.11237, 4.93, -0.503224, 0.201034, 4.98108, -0.64557, -2.21256, -5.7984, -0.360878, -6.11237, 0.553958, 0.905471, -0.430785, -0.555093, 0.905471, 0.0131631, 0.481308, 0.888703, 0.0861573, 0.110111, -0.865376, 6.11117, -5.7984, -0.495022, -6.11237, 0.78099, -0.848244, -1.69203, 0.110111, -0.89144, 6.11117, -0.00113487, -0.956325, 2.53804, -5.7984, -0.360878, -5.54876, -0.555093, 0.905471, -0.430785, -0.482442, 0.888703, 0.0861573, -4.98222, -0.210148, -2.21256, -4.93113, -0.352676, 0.201034, -0.111246, -0.865376, 6.11117, -4.98222, -0.64557, -2.21256, -5.7984, -0.495022, -5.54876, -0.782125, -0.848244, -1.69203, -0.111246, -0.89144, 6.11117, -4.93113, -0.503224, 0.201034 )
 
-[node name="Spatial" type="Spatial"]
+[node name="Main" type="Spatial"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
 
-[node name="Spaceship" parent="." instance=ExtResource( 2 )]
+[node name="Spaceship" parent="." groups=["Player"] instance=ExtResource( 2 )]
 
 [node name="StaticBody" type="StaticBody" parent="."]
-transform = Transform( 3.02186, 2.09633, 1.57282, -2.62076, 2.41717, 1.81354, 0, -2.40056, 3.19958, -0.991391, 16.0642, 93.6875 )
+transform = Transform( 3.02186, 2.09633, 1.57282, -2.62076, 2.41717, 1.81354, 0, -2.40056, 3.19958, -104.479, 16.0642, 93.6875 )
+collision_layer = 2
+collision_mask = 0
 __meta__ = {
 "_edit_group_": true
 }
@@ -61,6 +64,8 @@ shape = SubResource( 5 )
 
 [node name="StaticBody2" type="StaticBody" parent="."]
 transform = Transform( -0.361728, -2.63424, 2.9883, -3.79739, 1.13472, 0.540611, -1.20374, -2.78805, -2.60342, 188.636, 16.0642, 374.027 )
+collision_layer = 2
+collision_mask = 0
 __meta__ = {
 "_edit_group_": true
 }
@@ -77,6 +82,8 @@ shape = SubResource( 5 )
 
 [node name="StaticBody3" type="StaticBody" parent="."]
 transform = Transform( -0.361728, -2.63424, 2.9883, -3.79739, 1.13472, 0.540611, -1.20374, -2.78805, -2.60342, 266.747, -26.5827, -461.697 )
+collision_layer = 2
+collision_mask = 0
 __meta__ = {
 "_edit_group_": true
 }
@@ -93,6 +100,8 @@ shape = SubResource( 5 )
 
 [node name="StaticBody4" type="StaticBody" parent="."]
 transform = Transform( -2.96542, -1.03324, 2.47764, -2.39943, 2.67567, -1.75599, -1.20374, -2.78805, -2.60342, -149.653, -26.5827, -461.697 )
+collision_layer = 2
+collision_mask = 0
 __meta__ = {
 "_edit_group_": true
 }
@@ -106,3 +115,6 @@ material/0 = SubResource( 4 )
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody4"]
 transform = Transform( 1, -4.16094e-11, -3.14344e-11, 2.98023e-08, 1, 2.98023e-08, 0, 0, 1, 0, 0, 0 )
 shape = SubResource( 5 )
+
+[node name="Meteor" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 89.6688, 28.5099, 594.397 )

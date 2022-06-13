@@ -125,7 +125,8 @@ func _physics_process(delta):
 	
 	# stops the player when colliding with an object
 	if collision:
-		currentspd = 0
+#		currentspd = 0
+		pass
 
 
 # checks if ESC or R are pressed, esc toggles mouse mode and R reloads the game
@@ -136,5 +137,5 @@ func _input(event):
 				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 			else:
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		if event.scancode == KEY_R:
+		if event.scancode == KEY_R && !event.echo && event.pressed:
 			get_tree().reload_current_scene()
