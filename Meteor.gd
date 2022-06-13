@@ -19,8 +19,10 @@ func _ready():
 	var meteorscale = rng.randi_range(40, 50)
 	$MeshInstance.scale = Vector3(1, 1, 1) * meteorscale
 	
+	# Loads in an instance of the collision box associated with the selected model
 	$CollisionShape.shape = load("res://Models/CollisionShape Meteor " + meteornumber + ".tres").duplicate()
 	
+	# Scales the meteor to the randomized size
 	for i in $CollisionShape.shape.points.size():
 		$CollisionShape.shape.points[i] *= meteorscale
 	
@@ -29,13 +31,14 @@ func _ready():
 func _physics_process(delta):
 	var collision = move_and_collide(vel * delta)
 	
+	# Deletes the meteor when health is below 0
 	if hp <= 0:
 		queue_free()
 	
+	# Checks for collisions, if the collider is the player, the meteor will be pushed in that direction
 	if collision:
 		var collider = collision.collider
+		
 		if collider.is_in_group("Player"):
 			vel = collider.transform.basis.z * collider.currentspd / $CollisionShape.scale.x
 			collider.currentspd = 0
-		elif collider.is_in_group("PlayerProjectile"):
-			hp -= collider.dmg
