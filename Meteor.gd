@@ -40,5 +40,5 @@ func _physics_process(delta):
 		var collider = collision.collider
 		
 		if collider.is_in_group("Player"):
-			vel = collider.transform.basis.z * collider.currentspd / ($CollisionShape.scale.x * 2)
-			collider.currentspd = 0
+			vel = collider.transform.basis.z * collider.player.currentspd / ($CollisionShape.scale.x * 2.5)
+			collider.player.currentspd = 0

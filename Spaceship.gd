@@ -1,24 +1,29 @@
 extends KinematicBody
 
-# normal movement speed, boost speed and acceleration
-export var spd = 150
-export var boost = 300
-export var accel = 5
-export var rotationspd = 5
+class spaceship:
+	# Normal movement speed, boost speed and acceleration
+	var spd = 150
+	var boost = 300
+	var accel = 5
+	var rotationspd = 5
+	
+	var currentrotation = rotationspd
+	var saveddirections = Vector2.ZERO
+	var currentspd = 0
+	
+	# To be used for the 3d matrix and multiplied by current speed
+	var vel = Vector3.ZERO
+	
+	# Values to be assigned to laser.gd on instance creation
+	var laserspd = 30
+	var laserdmg = 15
+	
+	# Loads the scene containing the laser projectile
+
+onready var laser = load("res://Laser.tscn")
 
 
-var currentrotation = rotationspd
-var saveddirections = Vector2.ZERO
-var currentspd = 0
-# to be used for the 3d matrix and multiplied by current speed
-var vel = Vector3.ZERO
-
-# values to be assigned to laser.gd on instance creation
-export var laserspd = 30
-export var laserdmg = 15
-
-#loads the scene containing the laser projectile
-onready var laser = preload("res://Laser.tscn")
+var player = spaceship.new()
 
 var rng = RandomNumberGenerator.new()
 
@@ -31,31 +36,31 @@ func motion():
 	# if player isn't turning, decrement it by the same amount
 	# used for smoothing the player's turning
 	if direction.x != 0 || direction.y != 0:
-		currentrotation = clamp(currentrotation + rotationspd * 0.1, 0, rotationspd)
+		player.currentrotation = clamp(player.currentrotation + player.rotationspd * 0.1, 0, player.rotationspd)
 		# saves directional inputs for a smooth stop when letting go of movement buttons
-		saveddirections = direction.normalized()
+		player.saveddirections = direction.normalized()
 	else:
-		currentrotation = clamp(currentrotation - rotationspd * 0.1, 0, rotationspd)
+		player.currentrotation = clamp(player.currentrotation - player.rotationspd * 0.1, 0, player.rotationspd)
 	
 	# function rotates the player by specified angle (0.05 radians)
-	rotate_object_local(Vector3(saveddirections.y, 0, saveddirections.x).normalized(),
-								clamp(currentrotation / (currentspd + 1), 0, 0.05))
+	rotate_object_local(Vector3(player.saveddirections.y, 0, player.saveddirections.x).normalized(),
+								clamp(player.currentrotation / (player.currentspd + 1), 0, 0.05))
 	
 	
 	# if button is held, max speed is increased
 	if Input.is_action_pressed("throttle") && $Boost/BoostMeter.value > 0:
-		if currentspd < boost:
-			currentspd += accel
+		if player.currentspd < player.boost:
+			player.currentspd += player.accel
 			
 		# If BoostMeter's value is 0, the player can't use the boost
 		# BoostMeter recharges after 2 seconds of it not being used
 		$Boost/BoostMeter.value -= 1
 		$Boost/BoostCooldown.start()
 	else:
-		if currentspd < spd:
-			currentspd += accel
-		elif currentspd > spd:
-			currentspd -= accel
+		if player.currentspd < player.spd:
+			player.currentspd += player.accel
+		elif player.currentspd > player.spd:
+			player.currentspd -= player.accel
 	
 	# Recharges the player's boost when the cooldown is over
 	if $Boost/BoostCooldown.is_stopped():
@@ -63,13 +68,13 @@ func motion():
 	
 	# slows the player
 	if Input.is_action_pressed("brake"):
-		currentspd -= accel * 2
+		player.currentspd -= player.accel * 2
 	
 	# keeps speed above normal speed divided by 2, and below boost speed
-	currentspd = clamp(currentspd, spd/2, boost)
+	player.currentspd = clamp(player.currentspd, player.spd/2, player.boost)
 	
 	# gets local Z axis (forward/backward) and multiplies it by the current speed
-	vel = transform.basis.z * currentspd
+	player.vel = transform.basis.z * player.currentspd
 	
 	# function returns a normalized and orthogonal 3d matrix
 	# used for preventing issues with rotation
@@ -85,8 +90,8 @@ func shoot_laser():
 		# values are assigned before the laser beam is created
 		laserinst.player = self
 		
-		laserinst.spd = laserspd
-		laserinst.dmg = laserdmg
+		laserinst.spd = player.laserspd
+		laserinst.dmg = player.laserdmg
 		
 		# sets the projectile's position to be in front of the player
 		laserinst.transform = self.transform
@@ -106,27 +111,27 @@ func _ready():
 
 func _physics_process(delta):
 	# used to display speed on the screen
-	$Label.text = str(currentspd) + "\n"
+	$Label.text = str(player.currentspd) + "\n"
 	
 	motion()
 	
 	shoot_laser()
 	
 	# camera shakes when going above normal speed
-	if currentspd > spd:
-		$Camera.h_offset = rng.randf_range(-currentspd*0.0001, currentspd*0.0001)
-		$Camera.v_offset = rng.randf_range(-currentspd*0.0001, currentspd*0.0001)
+	if player.currentspd > player.spd:
+		$Camera.h_offset = rng.randf_range(-player.currentspd*0.0001, player.currentspd*0.0001)
+		$Camera.v_offset = rng.randf_range(-player.currentspd*0.0001, player.currentspd*0.0001)
 	else:
 		$Camera.h_offset = 0
 		$Camera.v_offset = 0
 	
 	# calculates collision and movement
-	var collision = move_and_collide(vel * delta)
+	var collision = move_and_collide(player.vel * delta)
 	
 	# stops the player when colliding with an object
 	if collision:
 		if collision.collider is StaticBody:
-			currentspd = 0
+			player.currentspd = 0
 
 
 # checks if ESC or R are pressed, esc toggles mouse mode and R reloads the game
