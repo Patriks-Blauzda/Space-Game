@@ -23,6 +23,13 @@ func _ready():
 	# Loads in an instance of the collision box associated with the selected model
 	$CollisionShape.shape = load("res://Models/CollisionShape Meteor " + meteornumber + ".tres").duplicate()
 	
+	# Randomizes meteor rotation on creation
+	rotation_degrees = Vector3(
+		rng.randi_range(0, 360),
+		rng.randi_range(0, 360),
+		rng.randi_range(0, 360)
+	)
+	
 	# Scales the meteor to the randomized size
 	for i in $CollisionShape.shape.points.size():
 		$CollisionShape.shape.points[i] *= meteorscale
