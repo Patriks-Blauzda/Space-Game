@@ -51,10 +51,12 @@ func _physics_process(delta):
 	if collision:
 		var collider = collision.collider
 		
+		# Moves meteors that collide wit the player, also stops the player's movement
 		if collider.is_in_group("Player"):
 			vel = collider.transform.basis.z * collider.player.currentspd / ($CollisionShape.scale.x * 2.5)
 			collider.player.currentspd = 0
 		
+		# If the meteor collides with another moving object, pushes it back and slows own movement by half
 		elif collider is KinematicBody:
 			collider.vel += vel / ($CollisionShape.scale.x * 2.5)
 			self.vel /= 2
