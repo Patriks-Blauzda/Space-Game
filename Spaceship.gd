@@ -2,9 +2,9 @@ extends KinematicBody
 
 class spaceship:
 	# Normal movement speed, boost speed and acceleration
-	var spd = 150
-	var boost = 300
-	var accel = 5
+	var spd = 40
+	var boost = 80
+	var accel = 1
 	var rotationspd = 5
 	
 	var currentrotation = rotationspd
