@@ -13,9 +13,9 @@ func _ready():
 		var meteorinst = meteor.instance()
 		
 		meteorinst.translation = Vector3(
-		rng.randi_range(300, 900) * (rng.randi_range(0, 1) * 2 - 1),
-		rng.randi_range(300, 900) * (rng.randi_range(0, 1) * 2 - 1),
-		rng.randi_range(300, 900) * (rng.randi_range(0, 1) * 2 - 1)
+		rng.randi_range(300, 750) * (rng.randi_range(0, 1) * 2 - 1),
+		rng.randi_range(300, 750) * (rng.randi_range(0, 1) * 2 - 1),
+		rng.randi_range(300, 750) * (rng.randi_range(0, 1) * 2 - 1)
 		)
 		
 		$Meteors.add_child(meteorinst)

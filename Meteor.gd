@@ -17,7 +17,7 @@ func _ready():
 	$MeshInstance.mesh = load("res://Models/Meteor " + meteornumber + ".tres")
 	
 	# Randomly scales the meteor to a larger size
-	var meteorscale = rng.randi_range(40, 50)
+	var meteorscale = rng.randi_range(20, 50)
 	$MeshInstance.scale = Vector3(1, 1, 1) * meteorscale
 	
 	# Loads in an instance of the collision box associated with the selected model
@@ -54,3 +54,7 @@ func _physics_process(delta):
 		if collider.is_in_group("Player"):
 			vel = collider.transform.basis.z * collider.player.currentspd / ($CollisionShape.scale.x * 2.5)
 			collider.player.currentspd = 0
+		
+		elif collider is KinematicBody:
+			collider.vel += vel / ($CollisionShape.scale.x * 2.5)
+			self.vel /= 2
