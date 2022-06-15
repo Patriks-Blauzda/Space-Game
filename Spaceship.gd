@@ -79,7 +79,7 @@ func motion():
 		player.currentspd -= player.accel * 2
 	
 	# keeps speed above normal speed divided by 2, and below boost speed
-	player.currentspd = clamp(player.currentspd, 0, player.boost)
+	player.currentspd = clamp(player.currentspd, player.spd / 2, player.boost)
 	
 	# gets local Z axis (forward/backward) and multiplies it by the current speed
 	player.vel = transform.basis.z * player.currentspd
