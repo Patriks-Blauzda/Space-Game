@@ -7,8 +7,8 @@ class spaceship:
 	var accel = 1
 	var rotationspd = 1
 	
-	var currentrotation = rotationspd
-	var saveddirections = Vector2.ZERO
+	var currentrotation = 0
+	var saveddirections = Vector2(0, 1)
 	var currentspd = 0
 	
 	# To be used for the 3d matrix and multiplied by current speed
@@ -26,6 +26,10 @@ onready var laser = load("res://Laser.tscn")
 var player = spaceship.new()
 
 var rng = RandomNumberGenerator.new()
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	rng.randomize()
 
 # handles player movement and rotation
 func motion():
@@ -54,7 +58,11 @@ func motion():
 			
 		# If BoostMeter's value is 0, the player can't use the boost
 		# BoostMeter recharges after 2 seconds of it not being used
-		$Boost/BoostMeter.value -= 1
+		
+		# Boost is only drained when the player moves above normal speed
+		if player.currentspd > player.spd:
+			$Boost/BoostMeter.value -= 1
+			
 		$Boost/BoostCooldown.start()
 	else:
 		if player.currentspd < player.spd:
@@ -101,13 +109,6 @@ func shoot_laser():
 		# another laser cannot be fired until the timer stops
 		get_parent().add_child(laserinst)
 		$Weapons/LaserCooldown.start()
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-#	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	rng.randomize()
-
 
 func _physics_process(delta):
 	# used to display speed on the screen

@@ -120,9 +120,9 @@ margin_right = 607.0
 margin_bottom = 564.0
 mouse_filter = 2
 theme = SubResource( 5 )
-max_value = 120.0
+max_value = 180.0
 step = 1.0
-value = 40.0
+value = 180.0
 percent_visible = false
 
 [node name="BoostCooldown" type="Timer" parent="Boost"]
