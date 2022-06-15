@@ -1,1 +1,4 @@
 All 3D models used: https://robert-contreras.itch.io/space-ship-asset-pack
+Skybox: https://github.com/wwwtyro/space-3d
+Skybox converted with: https://danilw.github.io/GLSL-howto/cubemap_to_panorama_js/cubemap_to_panorama.html
+Crosshair: https://opengameart.org/content/crosshairs-and-reticles
