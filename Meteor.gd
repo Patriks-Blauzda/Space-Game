@@ -6,6 +6,7 @@ var hp = 100
 
 var rng = RandomNumberGenerator.new()
 
+var debris = load("res://MeteorDebris.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -31,8 +32,12 @@ func _ready():
 func _physics_process(delta):
 	var collision = move_and_collide(vel * delta)
 	
-	# Deletes the meteor when health is below 0
+	# Deletes the meteor when health is below 0 and instances particles
 	if hp <= 0:
+		var debrisinst = debris.instance()
+		debrisinst.translation = self.translation
+		debrisinst.scale = $MeshInstance.scale / 2
+		get_parent().add_child(debrisinst)
 		queue_free()
 	
 	# Checks for collisions, if the collider is the player, the meteor will be pushed in that direction

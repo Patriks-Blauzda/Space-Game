@@ -1,10 +1,23 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Spaceship.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Meteor.tscn" type="PackedScene" id=3]
 
+[sub_resource type="ProceduralSky" id=6]
+sky_top_color = Color( 0, 0, 0, 1 )
+sky_horizon_color = Color( 0, 0, 0, 1 )
+sky_energy = 0.0
+ground_bottom_color = Color( 0, 0, 0, 1 )
+ground_horizon_color = Color( 0, 0, 0, 1 )
+ground_energy = 0.0
+sun_color = Color( 0.937255, 1, 0.588235, 1 )
+sun_latitude = 64.09
+sun_energy = 10.0
+
 [sub_resource type="Environment" id=2]
-background_mode = 1
+background_mode = 2
+background_sky = SubResource( 6 )
+background_color = Color( 1, 1, 1, 1 )
 ambient_light_color = Color( 1, 1, 1, 1 )
 ambient_light_sky_contribution = 0.0
 
@@ -24,7 +37,7 @@ surfaces/0 = {
 
 [sub_resource type="SpatialMaterial" id=4]
 params_cull_mode = 2
-albedo_color = Color( 0.945098, 0.309804, 1, 1 )
+albedo_color = Color( 1, 0, 0.984314, 1 )
 metallic = 1.0
 metallic_specular = 0.41
 roughness = 0.25

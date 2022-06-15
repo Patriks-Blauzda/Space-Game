@@ -1,0 +1,55 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://MeteorDebris.gd" type="Script" id=1]
+
+[sub_resource type="Gradient" id=10]
+offsets = PoolRealArray( 0, 0.645963, 1 )
+colors = PoolColorArray( 0.168627, 0.203922, 0.243137, 1, 0.168627, 0.203922, 0.243137, 1, 0.168627, 0.203922, 0.243137, 0 )
+
+[sub_resource type="GradientTexture" id=11]
+gradient = SubResource( 10 )
+
+[sub_resource type="Curve" id=12]
+max_value = 100.0
+_data = [ Vector2( 0, 51.4773 ), 0.0, -100.364, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=13]
+curve = SubResource( 12 )
+
+[sub_resource type="Curve" id=15]
+min_value = -200.0
+max_value = 200.0
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, -92.2727 ), -316.938, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=16]
+curve = SubResource( 15 )
+
+[sub_resource type="ParticlesMaterial" id=14]
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 15.0
+initial_velocity_random = 0.25
+linear_accel = 10.0
+linear_accel_random = 0.25
+linear_accel_curve = SubResource( 16 )
+damping_curve = SubResource( 13 )
+color_ramp = SubResource( 11 )
+
+[sub_resource type="SpatialMaterial" id=8]
+flags_transparent = true
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SphereMesh" id=17]
+material = SubResource( 8 )
+
+[node name="Debris" type="Particles"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000249386, 0, -0.0088827 )
+emitting = false
+amount = 25
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 14 )
+draw_pass_1 = SubResource( 17 )
+script = ExtResource( 1 )

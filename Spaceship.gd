@@ -5,7 +5,7 @@ class spaceship:
 	var spd = 40
 	var boost = 80
 	var accel = 1
-	var rotationspd = 5
+	var rotationspd = 1
 	
 	var currentrotation = rotationspd
 	var saveddirections = Vector2.ZERO
