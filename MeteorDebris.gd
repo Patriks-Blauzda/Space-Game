@@ -6,6 +6,6 @@ func _ready():
 	emitting = true
 
 # When finished emitting, deletes self
-func _process(delta):
+func _process(_delta):
 	if !emitting:
 		queue_free()

@@ -9,7 +9,7 @@ func _ready():
 	
 	
 	# Places an intanced meteor in specified areas, excluding player spawn point
-	for i in range(rng.randi_range(20, 40)):
+	for _i in range(rng.randi_range(20, 40)):
 		var meteorinst = meteor.instance()
 		
 		meteorinst.translation = Vector3(

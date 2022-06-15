@@ -144,4 +144,4 @@ func _input(event):
 			else:
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		if event.scancode == KEY_R && !event.echo && event.pressed:
-			get_tree().reload_current_scene()
+			var _reset = get_tree().reload_current_scene()
