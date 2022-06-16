@@ -7,8 +7,10 @@ class spaceship:
 	var accel = 1
 	var rotationspd = 1
 	
+	var currentrot = Vector2(0, 0)
+	
 	var currentrotation = 0
-	var saveddirections = Vector2(0, 1)
+	var saveddirections = Vector2(1, 1)
 	var currentspd = 0
 	
 	# To be used for the 3d matrix and multiplied by current speed
@@ -36,19 +38,30 @@ func motion():
 	# takes joystick or arrow key input and turns it into a 2d vector
 	var direction = Input.get_vector("joystick_left", "joystick_right", "joystick_down", "joystick_up")
 	
-	# if player is turning, increment current rotation speed by a fraction of max rotation speed
-	# if player isn't turning, decrement it by the same amount
-	# used for smoothing the player's turning
-	if direction.x != 0 || direction.y != 0:
-		player.currentrotation = clamp(player.currentrotation + player.rotationspd * 0.1, 0, player.rotationspd)
-		# saves directional inputs for a smooth stop when letting go of movement buttons
-		player.saveddirections = direction.normalized()
+	# If player is turning, increment current rotation speed by a fraction of max rotation speed
+	# If player isn't turning, decrement it by the same amount
+	# Used for smoothing the player's turning
+	if direction.x != 0:
+		player.currentrot.x = clamp(player.currentrot.x + player.rotationspd * 0.1, 0, player.rotationspd)
+		player.saveddirections.x = direction.x
 	else:
-		player.currentrotation = clamp(player.currentrotation - player.rotationspd * 0.1, 0, player.rotationspd)
+		player.currentrot.x = clamp(player.currentrot.x - player.rotationspd * 0.1, 0, player.rotationspd)
 	
-	# function rotates the player by specified angle (0.05 radians)
-	rotate_object_local(Vector3(player.saveddirections.y, 0, player.saveddirections.x).normalized(),
-								clamp(player.currentrotation / (player.currentspd + 1), 0, 0.05))
+	if direction.y != 0:
+		player.currentrot.y = clamp(player.currentrot.y + player.rotationspd * 0.1, 0, player.rotationspd)
+		player.saveddirections.y = direction.y
+	else:
+		player.currentrot.y = clamp(player.currentrot.y - player.rotationspd * 0.1, 0, player.rotationspd)
+	
+	# Rotates player along two axes separately
+	rotate_object_local(
+		Vector3(0, 0, player.saveddirections.x).normalized(),
+		clamp(player.currentrot.x / (player.currentspd + 1), 0, 0.05)
+	)
+	rotate_object_local(
+		Vector3(player.saveddirections.y, 0, 0).normalized(),
+		clamp(player.currentrot.y / (player.currentspd + 1), 0, 0.05)
+	)
 	
 	
 	# if button is held, max speed is increased
