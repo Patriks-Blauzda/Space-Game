@@ -5,11 +5,9 @@ class spaceship:
 	var spd = 40
 	var boost = 80
 	var accel = 1
-	var rotationspd = 1
+	var rotationspd = 1.2
 	
 	var currentrot = Vector2(0, 0)
-	
-	var currentrotation = 0
 	var saveddirections = Vector2(1, 1)
 	var currentspd = 0
 	
@@ -41,26 +39,49 @@ func motion():
 	# If player is turning, increment current rotation speed by a fraction of max rotation speed
 	# If player isn't turning, decrement it by the same amount
 	# Used for smoothing the player's turning
-	if direction.x != 0:
-		player.currentrot.x = clamp(player.currentrot.x + player.rotationspd * 0.1, 0, player.rotationspd)
-		player.saveddirections.x = direction.x
-	else:
-		player.currentrot.x = clamp(player.currentrot.x - player.rotationspd * 0.1, 0, player.rotationspd)
 	
+	# Rotation acceleration based on direction and rotation speed
+	if direction.x != 0:
+		player.currentrot.x = clamp(
+			player.currentrot.x + player.rotationspd * 0.1 * direction.x,
+			-player.rotationspd,
+			player.rotationspd
+		)
+		
+		# Saves last direction input for when player isn't turning
+		player.saveddirections.x = direction.x
+	
+	# If player isn't turning, deaccelerates rotation by rotation spd
+	# Rotation value is floored to 0.1 to prevent floating point error
+	elif player.currentrot.x != 0.0:
+		player.currentrot.x -= player.rotationspd * 0.1 * player.saveddirections.x
+		player.currentrot.x = stepify(player.currentrot.x, 0.1)
+	
+	
+	# The same as the above code but for the other axis
 	if direction.y != 0:
-		player.currentrot.y = clamp(player.currentrot.y + player.rotationspd * 0.1, 0, player.rotationspd)
+		player.currentrot.y = clamp(
+			player.currentrot.y + player.rotationspd * 0.1 * direction.y,
+			-player.rotationspd,
+			player.rotationspd
+		)
+		
 		player.saveddirections.y = direction.y
-	else:
-		player.currentrot.y = clamp(player.currentrot.y - player.rotationspd * 0.1, 0, player.rotationspd)
+	
+
+	elif player.currentrot.y != 0.0:
+		player.currentrot.y -= player.rotationspd * 0.1 * player.saveddirections.y
+		player.currentrot.y = stepify(player.currentrot.y, 0.1)
+	
 	
 	# Rotates player along two axes separately
 	rotate_object_local(
-		Vector3(0, 0, player.saveddirections.x).normalized(),
-		clamp(player.currentrot.x / (player.currentspd + 1), 0, 0.05)
+		Vector3(0, 0, 1).normalized(),
+		clamp(player.currentrot.x / (player.currentspd + 1), -0.05, 0.05)
 	)
 	rotate_object_local(
-		Vector3(player.saveddirections.y, 0, 0).normalized(),
-		clamp(player.currentrot.y / (player.currentspd + 1), 0, 0.05)
+		Vector3(1, 0, 0).normalized(),
+		clamp(player.currentrot.y / (player.currentspd + 1), -0.05, 0.05)
 	)
 	
 	
