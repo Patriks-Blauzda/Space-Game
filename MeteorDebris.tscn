@@ -39,6 +39,7 @@ color_ramp = SubResource( 11 )
 [sub_resource type="SpatialMaterial" id=8]
 flags_transparent = true
 vertex_color_use_as_albedo = true
+params_cull_mode = 2
 
 [sub_resource type="SphereMesh" id=17]
 material = SubResource( 8 )
