@@ -145,7 +145,7 @@ func shoot_laser():
 		$Weapons/LaserCooldown.start()
 
 func _physics_process(delta):
-	# used to display speed on the screen
+	# used to display speed and health on the screen
 	$Label.text = "HP: %s\nSPD: %s" % [player.hp, player.currentspd]
 	
 	motion()
