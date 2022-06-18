@@ -2,6 +2,8 @@ extends KinematicBody
 
 class spaceship:
 	# Normal movement speed, boost speed and acceleration
+	var hp = 100
+	
 	var spd = 40
 	var boost = 80
 	var accel = 1
@@ -130,8 +132,6 @@ func shoot_laser():
 		var laserinst = laser.instance()
 		
 		# values are assigned before the laser beam is created
-		laserinst.player = self
-		
 		laserinst.spd = player.laserspd
 		laserinst.dmg = player.laserdmg
 		
@@ -146,7 +146,7 @@ func shoot_laser():
 
 func _physics_process(delta):
 	# used to display speed on the screen
-	$Label.text = str(player.currentspd) + "\n"
+	$Label.text = "HP: %s\nSPD: %s" % [player.hp, player.currentspd]
 	
 	motion()
 	

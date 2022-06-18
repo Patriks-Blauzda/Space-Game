@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://panorama_image.png" type="Texture" id=1]
 [ext_resource path="res://Spaceship.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Enemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Main.gd" type="Script" id=4]
 
 [sub_resource type="PanoramaSky" id=6]
@@ -24,3 +25,6 @@ environment = SubResource( 2 )
 [node name="Spaceship" parent="." instance=ExtResource( 2 )]
 
 [node name="Meteors" type="Node" parent="."]
+
+[node name="Enemy" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.0627, 0.794694, 1000.1 )

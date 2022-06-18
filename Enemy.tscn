@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Models/Texture for all assets.png" type="Texture" id=1]
 [ext_resource path="res://Models/diffuse.material" type="Material" id=2]
 [ext_resource path="res://Models/Emission.material" type="Material" id=3]
+[ext_resource path="res://Enemy.gd" type="Script" id=4]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Ship 3_Cube003"
@@ -40,15 +41,41 @@ albedo_texture = ExtResource( 1 )
 [sub_resource type="ConvexPolygonShape" id=4]
 points = PoolVector3Array( -0.379414, 1.63485, -6.89116, -0.356891, 1.53126, -6.87938, -0.694724, 1.505, -6.87585, -8.53592, -0.649847, -2.43, -0.381145, 2.15027, -4.53401, -9.53674e-07, 2.15135, -4.53401, 0.37768, 1.63485, -6.89116, -0.720712, 1.06188, -6.82287, 0.355157, 1.53126, -6.87938, -0.826392, 1.1928, -6.83817, -8.52379, -0.693009, -2.43, -8.66758, -0.739048, -1.53518, -8.68144, -0.687973, -1.53518, -0.379414, 2.56822, -2.44649, -0.826392, 1.018, -6.81698, -9.53674e-07, 2.57074, -2.44649, 0.379412, 2.15027, -4.53401, 8.53418, -0.649847, -2.43, 0.69299, 1.505, -6.87585, -0.379414, 0.577746, -6.764, 0.718977, 1.06188, -6.82287, -4.75912, -1.10376, -0.885261, -1.65798, -0.729336, -5.45709, -8.83217, -0.792281, -0.492011, -8.84949, -0.732214, -0.492011, -0.145529, 1.40357, 2.05587, -8.84949, -0.732214, 1.18813, -4.27402, 0.989222, 2.19834, -4.13196, 0.886353, 3.26506, -4.11463, 0.88923, 3.26388, 0.143795, 1.40357, 2.05587, 0.37768, 2.56822, -2.44649, 8.84949, -0.732214, -0.492011, 8.66585, -0.739048, -1.53518, 8.52205, -0.693009, -2.43, 0.824658, 1.018, -6.81698, 0.824658, 1.1928, -6.83817, 0.37768, 0.578106, -6.764, 1.65625, -0.728257, -5.45709, -4.75912, -1.10233, 1.34119, -8.83217, -0.792281, 1.18813, 4.75738, -1.10233, -0.885261, 4.75738, -1.10233, 1.34119, -0.145529, 1.37228, 2.16066, -8.69877, -0.692649, 1.86867, -8.53245, -0.648408, 2.52212, -4.21685, 0.834199, 3.27683, -1.75847, 0.0598047, 5.13594, -0.99964, 0.0817453, 5.13594, -0.145529, 0.0907372, 5.13594, 0.143795, 1.37228, 2.16066, 4.1129, 0.88923, 3.26388, 4.13023, 0.886353, 3.26506, 4.27229, 0.989222, 2.19834, 8.84949, -0.732214, 1.18813, 8.83044, -0.792281, -0.492011, -1.75847, -0.734372, 5.13594, -8.52032, -0.69193, 2.52212, -8.68318, -0.744443, 1.86867, 8.83044, -0.792281, 1.18813, 8.68144, -0.744443, 1.86867, 8.51859, -0.69193, 2.52212, 1.75673, -0.734372, 5.13594, 0.143795, 0.0907372, 5.13594, 0.997907, 0.0817453, 5.13594, 1.75673, 0.0598047, 5.13594, 4.21512, 0.834199, 3.27683, 8.53072, -0.648408, 2.52212, 8.69703, -0.692649, 1.86867 )
 
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 16, 6, 750 )
+
 [node name="Enemy" type="KinematicBody" groups=["Enemies"]]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource( 4 )
 
 [node name="Ship 4" type="MeshInstance" parent="."]
-transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 0, 0 )
 mesh = SubResource( 1 )
 skeleton = NodePath("")
 material/0 = SubResource( 2 )
 material/1 = SubResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
+transform = Transform( -2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 0, 0, 0 )
 shape = SubResource( 4 )
+
+[node name="ReactionSpeed" type="Timer" parent="."]
+wait_time = 0.75
+autostart = true
+
+[node name="Weapons" type="Node" parent="."]
+
+[node name="LaserCooldown" type="Timer" parent="Weapons"]
+wait_time = 0.8
+one_shot = true
+
+[node name="LaserPosition" type="Position3D" parent="Weapons"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -13.5514 )
+
+[node name="ShootArea" type="Area" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="ShootArea"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -760 )
+shape = SubResource( 5 )

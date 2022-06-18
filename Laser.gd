@@ -1,7 +1,6 @@
 extends KinematicBody
 
 # Variables are defined in spaceship.gd
-var player
 var spd
 var dmg
 
@@ -13,6 +12,8 @@ func _physics_process(_delta):
 func _on_Area_body_entered(body):
 	if body.is_in_group("Enemies"):
 		body.hp -= dmg
+	elif body.is_in_group("Player"):
+		body.player.hp -= dmg
 	queue_free()
 
 # Deletes the laser after a specific amount of time
