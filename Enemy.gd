@@ -6,7 +6,7 @@ export var laserspd = 30
 export var laserdmg = 5
 
 var laser = load("res://Laser.tscn")
-
+var debris = load("res://MeteorDebris.tscn")
 
 # spawns an instance of a laser projectile
 func shoot_laser():
@@ -46,4 +46,8 @@ func _physics_process(delta):
 	move_and_slide(transform.basis.z * -spd)
 	
 	if hp <= 0:
+		var debrisinst = debris.instance()
+		debrisinst.translation = self.translation
+		debrisinst.scale = $"Ship 4".scale
+		get_parent().add_child(debrisinst)
 		queue_free()
