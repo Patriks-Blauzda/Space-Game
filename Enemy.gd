@@ -30,7 +30,7 @@ func shoot_laser():
 		get_parent().add_child(laserinst)
 		$Weapons/LaserCooldown.start()
 
-# Called when the node enters the scene tree for the first time.
+
 func _physics_process(delta):
 	var player = get_tree().get_nodes_in_group("Player")[0]
 	
