@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://panorama_image.png" type="Texture" id=1]
 [ext_resource path="res://Spaceship.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Enemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Main.gd" type="Script" id=4]
 
 [sub_resource type="PanoramaSky" id=6]
@@ -31,8 +30,5 @@ environment = SubResource( 2 )
 [node name="EnemySpawnTimer" type="Timer" parent="Enemies"]
 wait_time = 10.0
 autostart = true
-
-[node name="Enemy" parent="Enemies" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 51.9123, 99.6908, 998.861 )
 
 [connection signal="timeout" from="Enemies/EnemySpawnTimer" to="." method="_on_EnemySpawnTimer_timeout"]

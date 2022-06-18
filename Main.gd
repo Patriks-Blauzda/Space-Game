@@ -8,6 +8,7 @@ var enemy = load("res://Enemy.tscn")
 func _ready():
 	rng.randomize()
 	
+	_on_EnemySpawnTimer_timeout()
 	
 	# Places an intanced meteor in specified areas, excluding player spawn point
 	for _i in range(rng.randi_range(20, 40)):
