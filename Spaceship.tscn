@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Models/normal.png" type="Texture" id=1]
 [ext_resource path="res://Spaceship.gd" type="Script" id=2]
 [ext_resource path="res://crosshair10.png" type="Texture" id=3]
+[ext_resource path="res://GameOver.gd" type="Script" id=4]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Cube"
@@ -137,3 +138,46 @@ visibility_aabb = AABB( -12.3025, -8.2498, -3.27957, 24.6051, 16.4996, 6.55913 )
 local_coords = false
 process_material = SubResource( 6 )
 draw_pass_1 = SubResource( 10 )
+
+[node name="GameOver" type="Panel" parent="."]
+pause_mode = 2
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -94.0
+margin_top = -74.0
+margin_right = 94.0
+margin_bottom = 74.0
+script = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="GameOver"]
+margin_right = 188.0
+margin_bottom = 14.0
+text = "
+Game Over"
+align = 1
+valign = 1
+
+[node name="Button" type="Button" parent="GameOver"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -62.5
+margin_top = -16.5
+margin_right = 62.5
+margin_bottom = 16.5
+text = "Restart"
+
+[node name="Button2" type="Button" parent="GameOver"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -62.5
+margin_top = 23.683
+margin_right = 62.5
+margin_bottom = 56.683
+text = "Quit"

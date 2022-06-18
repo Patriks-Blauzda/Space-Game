@@ -3,7 +3,9 @@ extends KinematicBody
 export var hp = 75
 export var spd = 15
 export var laserspd = 30
-export var laserdmg = 5
+export var laserdmg = 10
+
+var vel
 
 var laser = load("res://Laser.tscn")
 var debris = load("res://MeteorDebris.tscn")
@@ -43,7 +45,9 @@ func _physics_process(delta):
 	if $ShootArea.overlaps_body(player):
 		shoot_laser()
 	
-	move_and_slide(transform.basis.z * -spd)
+	vel = transform.basis.z * -spd
+	
+	var _collision = move_and_slide(vel)
 	
 	if hp <= 0:
 		var debrisinst = debris.instance()

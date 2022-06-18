@@ -24,7 +24,7 @@ func _ready():
 
 
 # Spawns between 1 and 4 enemies far from the spawn point in a set interval
-# Default: every 10 seconds
+# Default: every 8 seconds
 func _on_EnemySpawnTimer_timeout():
 	for _i in range(rng.randi_range(1, 4)):
 		var enemyinst = enemy.instance()

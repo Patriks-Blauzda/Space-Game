@@ -33,6 +33,7 @@ var rng = RandomNumberGenerator.new()
 func _ready():
 	rng.randomize()
 
+
 # handles player movement and rotation
 func motion():
 	# takes joystick or arrow key input and turns it into a 2d vector
@@ -70,7 +71,7 @@ func motion():
 		
 		player.saveddirections.y = direction.y
 	
-
+	
 	elif player.currentrot.y != 0.0:
 		player.currentrot.y -= player.rotationspd * 0.1 * player.saveddirections.y
 		player.currentrot.y = stepify(player.currentrot.y, 0.1)
@@ -144,6 +145,7 @@ func shoot_laser():
 		get_parent().add_child(laserinst)
 		$Weapons/LaserCooldown.start()
 
+
 func _physics_process(delta):
 	# used to display speed and health on the screen
 	$Label.text = "HP: %s\nSPD: %s" % [player.hp, player.currentspd]
@@ -167,15 +169,14 @@ func _physics_process(delta):
 	if collision:
 		if collision.collider is StaticBody:
 			player.currentspd = 0
+	
+	if player.hp <= 0:
+		$GameOver.show()
+		get_tree().paused = true
 
 
 # checks if ESC or R are pressed, esc toggles mouse mode and R reloads the game
 func _input(event):
 	if event is InputEventKey:
-		if event.scancode == KEY_ESCAPE && !event.echo && event.pressed:
-			if Input.get_mouse_mode() == 2:
-				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			else:
-				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		if event.scancode == KEY_R && !event.echo && event.pressed:
 			var _reset = get_tree().reload_current_scene()
