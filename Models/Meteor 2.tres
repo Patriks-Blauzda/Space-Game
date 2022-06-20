@@ -1,7 +1,4 @@
-[gd_resource type="ArrayMesh" load_steps=3 format=2]
-
-[ext_resource path="res://Models/Emission_001.material" type="Material" id=1]
-[ext_resource path="res://Models/Diffuse.material" type="Material" id=2]
+[gd_resource type="ArrayMesh" format=2]
 
 [resource]
 resource_name = "Meteor 4_Icosphere"
@@ -12,7 +9,6 @@ surfaces/0 = {
 "blend_shape_data": [  ],
 "format": 2194711,
 "index_count": 204,
-"material": ExtResource( 2 ),
 "primitive": 4,
 "skeleton_aabb": [  ],
 "vertex_count": 62
@@ -24,7 +20,6 @@ surfaces/1 = {
 "blend_shape_data": [  ],
 "format": 2194711,
 "index_count": 24,
-"material": ExtResource( 1 ),
 "primitive": 4,
 "skeleton_aabb": [  ],
 "vertex_count": 15
